@@ -1,4 +1,3 @@
-# Estágio 1: Build da Aplicação com Eclipse Temurin JDK
 FROM eclipse-temurin:17-jdk-jammy as builder
 WORKDIR /app
 COPY .mvn/ .mvn
@@ -11,7 +10,6 @@ RUN ./mvnw dependency:go-offline
 COPY src ./src
 RUN ./mvnw clean package -DskipTests
 
-# Estágio 2: Imagem Final de Execução com Eclipse Temurin JRE
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
